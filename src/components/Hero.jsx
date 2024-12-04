@@ -52,7 +52,16 @@ function Hero() {
     }, 10000);
 
     return () => clearInterval(interval); 
-  }, [handleNext]); 
+  }, [handleNext]);
+  useEffect(() => {
+  const contentElements = document.querySelectorAll('.content.fade-in');
+  contentElements.forEach((element) => {
+    element.classList.remove('fade-in');
+    void element.offsetWidth; // Trigger reflow
+    element.classList.add('fade-in');
+  });
+}, [currentIndex]);
+ 
   useEffect(() => {
     const activeVideo = document.querySelector('.list .item.active video');
     if (activeVideo) {
@@ -100,7 +109,7 @@ function Hero() {
               loop
               autoPlay={index === currentIndex} 
             />
-            <div className="content">
+            <div className={`content ${index === currentIndex ? 'fade-in' : ''}`}>
               
               <div className="title">{renderTitleWithColors(content[index].title)}</div>
               <div className="topic">{content[index].topic}</div>
