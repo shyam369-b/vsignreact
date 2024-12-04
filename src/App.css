@@ -21,6 +21,7 @@
   width: 100%;
   z-index: 100;
   position: absolute;
+  
 
 }
 
@@ -46,11 +47,26 @@
   text-decoration: none;
   color: #ffffff;
   transition: color 0.3s ease;
-  font-family:  Poppins;
-  font-weight: 200;
-  font-size: 15px;
+  font-family:  Poppins , sans-serif;
+  font-weight: 500;
+  font-size: 1em;
   margin-top: 40px;
-  font-weight: 250;
+  position: relative;
+}
+
+.navbar-links a:before{
+  content: '';
+  position: absolute;
+  background: #ffffff;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s ease;
+  
+}
+.navbar-links a:hover:before{
+  width: 100%;
 }
 
 .navbar-links a:hover {
@@ -172,13 +188,12 @@
 
 @media (max-width: 900px) {
   .navbar-component {
-    position: fixed;
+    position: absolute;
     align-items: center;
     justify-content: center;
     gap: 0;
+    background-color: #000000e3;
    
-    
-    
   }
 
   .navbar-links {
@@ -233,7 +248,7 @@
   .navbar-logos {
     display: flex;
     position: absolute;
-    top: 20px;
+    top: 25px;
     left: 20px;
     
   }
@@ -247,7 +262,7 @@
   .hamburger {
     display: flex;
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 20px;
   }
   .top-label{
@@ -487,11 +502,7 @@
   color: #fff;
   text-shadow: 0 5px 10px #0004;
 }
-.carousel .list .item .company{
-  font-weight: bold;
-  letter-spacing: 3px;
 
-}
 .carousel .list .item .title{
   font-size: 8em;
   font-weight: bold;
@@ -560,7 +571,7 @@
   bottom: 50px;
   left: 60%;
   width: max-content;
-  z-index: 100;
+  z-index: 70;
   display: flex;
   gap: 20px;
 }
@@ -616,6 +627,7 @@
   font-family: monospace;
   font-weight: bold;
   transition: .5s;
+  opacity: 1;
 }
 .arrows button:hover{
   background-color: #fff;
@@ -628,9 +640,40 @@
   z-index: 1;
 }
 
-/* animation text in first item */
+/* Animation for fading in content */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease forwards;
+}
 
-.carousel .list .item:nth-child(1) .content .company,
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* animation text in first item */
+.carousel .list .item:nth-child(1) .content .hero-caption,
+.carousel .list .item:nth-child(2) .content .hero-caption,
+.carousel .list .item:nth-child(3) .content .hero-caption,
+.carousel .list .item:nth-child(4) .content .hero-caption
+{
+  transform: translateX(0px);
+  filter: blur(20px);
+  opacity: 0;
+  animation: showCont .5s 1s linear 1 forwards ;
+}
+@keyframes showCont{
+  to{
+      transform: translateX(0px);
+      filter: blur(0px);
+      opacity: 1;
+  }
+}
+
 .carousel .list .item:nth-child(1) .content .title,
 .carousel .list .item:nth-child(1) .content .topic,
 .carousel .list .item:nth-child(1) .content .des,
@@ -658,6 +701,9 @@
   animation-delay: 1.6s!important;
 }
 .carousel .list .item:nth-child(1) .content .buttons{
+  animation-delay: 1.8s!important;
+}
+.carousel .list .item:nth-child(1) .content .hero-caption{
   animation-delay: 1.8s!important;
 }
 /* create animation when next click */
@@ -737,7 +783,6 @@
 .carousel.prev .arrows button{
   pointer-events: none;
 }
-.carousel.prev .list .item:nth-child(2) .content .company,
 .carousel.prev .list .item:nth-child(2) .content .title,
 .carousel.prev .list .item:nth-child(2) .content .topic,
 .carousel.prev .list .item:nth-child(2) .content .des,
@@ -815,6 +860,65 @@
   border-color: var(--primary-color);
 }
 
+
+/*MOBILE RESPONSIVENESS OF HERO SECTION HOMEPAGE*/
+
+
+@media(max-width:900px){
+
+  .carousel .list .item .content{
+    position: absolute;
+    top: 30%;
+
+  }
+  .carousel .list .item .topic {
+    font-size: 20px;
+  }
+  .carousel .list .item .des {
+    font-size: smaller;
+
+  }
+  .carousel .list .item .title {
+    font-size: 3rem;
+  }
+  .carousel .list .item .content .buttons{
+    font-size: 8pt;
+    height: 30px;
+    width: 110px;
+    font-weight: 500;
+
+  }
+  .carousel .list .item .content .buttons:hover{
+    font-size: 9pt;
+    height: 30px;
+    width: 110px;
+    font-weight: 500;
+    transition: ease-in-out;
+
+  }
+  .thumbnail{
+    gap:5px;
+    bottom: 70px;
+    left: 7%;
+  }
+  .thumbnail .item{
+    height: 90px;
+    width: 65px;
+  }
+  .thumbnail .item .content .title{
+    font-size: 10px;
+  }
+  .hero-caption{
+    margin-top: 220px;
+    margin-left: 5%;
+    font-size: smaller;
+    letter-spacing: 0;
+  }
+  .arrows{
+    opacity: 0;
+  }
+
+}
 
 /*Footer*/
 
