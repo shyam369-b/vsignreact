@@ -1,54 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
 
 function Counter() {
-  const countersRef = useRef(null); // Ref to track the counters container
-  const [activated, setActivated] = useState(false); // State to track activation
+  const countersRef = useRef(null);
+  const [activated, setActivated] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        countersRef.current &&
-        window.pageYOffset >
-          countersRef.current.offsetTop - window.innerHeight + 100 &&
-        !activated
-      ) {
-        setActivated(true);
-      }
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActivated(true);
+          observer.disconnect(); // Stop observing once activated
+        }
+      },
+      { threshold: 0.1 } // Trigger when 10% of the element is visible
+    );
 
-    // Attach scroll event listener
-    window.addEventListener("scroll", handleScroll);
+    if (countersRef.current) {
+      observer.observe(countersRef.current);
+    }
 
-    // Cleanup the event listener
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [activated]);
+    return () => observer.disconnect(); // Cleanup observer
+  }, []);
 
   return (
     <div>
       <div className="counters" ref={countersRef}>
         <div>
           <div className="counter">
-            <h1>
-              {activated && <AnimatedCounter target={25000} />}+
-            </h1>
+            <h1>{activated && <AnimatedCounter target={25000} />}+</h1>
             <h3>HAPPY CLIENTS</h3>
           </div>
           <div className="counter">
-            <h1>
-              {activated && <AnimatedCounter target={5000} />}+
-            </h1>
+            <h1>{activated && <AnimatedCounter target={5000} />}+</h1>
             <h3>SIGNAGE INSTALLED</h3>
           </div>
           <div className="counter">
-            <h1>
-              {activated && <AnimatedCounter target={1500} />}+
-            </h1>
+            <h1>{activated && <AnimatedCounter target={1500} />}+</h1>
             <h3>LOGO & BRANDING</h3>
           </div>
           <div className="counter">
-            <h1>
-              {activated && <AnimatedCounter target={10} />}+ YEARS
-            </h1>
+            <h1>{activated && <AnimatedCounter target={10} />}+ YEARS</h1>
             <h3>EXPERIENCE</h3>
           </div>
         </div>
@@ -57,7 +48,7 @@ function Counter() {
   );
 }
 
-// Reusable AnimatedCounter Component
+// Animated Counter
 const AnimatedCounter = ({ target }) => {
   const [count, setCount] = useState(0);
 
@@ -73,7 +64,7 @@ const AnimatedCounter = ({ target }) => {
       }, 10);
     }
 
-    return () => clearInterval(interval); // Cleanup interval
+    return () => clearInterval(interval);
   }, [count, target]);
 
   return <span>{count}</span>;
