@@ -10,7 +10,7 @@ function Hero() {
   const videos = [Video1, Video2, Video3, Video4];
   const content = videos.map((_, index) => ({
     company: "Hyderabad No.1 Signage Company",
-    title: `V SIGN Project`,
+    title: `V SIGN Project `,
     topic: `Topic ${index + 1}`,
     description: `Description for project ${index + 1}`,
   }));
@@ -23,11 +23,6 @@ function Hero() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + videos.length) % videos.length);
   };
 
-  const handleThumbnailClick = (index) => {
-    setCurrentIndex(index);
-  };
-
-  // Auto-advance carousel with visibility handling
   useEffect(() => {
     const intervalRef = { current: null };
 
@@ -48,7 +43,6 @@ function Hero() {
     };
   }, [handleNext]);
 
-  // Ensure only the active video plays
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (video) {
@@ -89,26 +83,10 @@ function Hero() {
               </div>
               <div className="topic">{content[index].topic}</div>
               <div className="des">{content[index].description}</div>
-              <button className="buttons">EXPLORE 🡺</button>
+              <button className="buttons">EXPLORE <i class="fa-solid fa-angles-right"></i></button>
               <div className="hero-caption">
                 {renderTextWithColors(content[index].company, ['#74b734', '#74b734'])}
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Thumbnail Navigation */}
-      <div className="thumbnail">
-        {videos.map((video, index) => (
-          <div
-            key={index}
-            className={`item ${index === currentIndex ? 'active-thumbnail' : ''}`}
-            onClick={() => handleThumbnailClick(index)}
-          >
-            <video src={video} muted alt={`Thumbnail for video ${index + 1}`} />
-            <div className="content">
-              <div className="title">Project Name {index + 1}</div>
             </div>
           </div>
         ))}
